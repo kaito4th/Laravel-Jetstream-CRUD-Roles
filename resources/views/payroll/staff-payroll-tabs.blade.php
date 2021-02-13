@@ -162,7 +162,7 @@ body{
         <input type="radio" id="tab2" name="1">
         <div class="tab-content-box">
             <h3 class="ml-4 text-lg leading-7 font-semibold">Attendance</h3>
-                <form action="{{ route('attendance.store', $user->id) }}" method="GET">
+                <form action="/{{$user->id}}" method="POST">
                 @csrf
                 <div class="col-span-6 sm:col-span-4" style="margin: 0 0 0 3rem;">
                     <label style="display: inline-block;">Date:</label> 

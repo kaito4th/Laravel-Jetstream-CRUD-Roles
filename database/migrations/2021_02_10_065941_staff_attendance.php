@@ -18,9 +18,9 @@ class StaffAttendance extends Migration
             $table->foreignId('user_id');
             $table->string('name');
             $table->integer('attendance_count');
-            $table->integer('regular_day');
-            $table->integer('half_day');
-            $table->integer('sunday');
+            $table->integer('regular_day')->nullable();
+            $table->integer('half_day')->nullable();
+            $table->integer('sunday')->nullable();
             $table->timestamps();
         });
 
