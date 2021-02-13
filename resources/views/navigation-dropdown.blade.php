@@ -1,3 +1,37 @@
+<head>
+<link href="/css/dropdown-menu.css" rel="stylesheet">
+<style>
+.right-menu{
+    margin-top: 1.25rem;
+    margin-left: 0;
+    float: right;
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-menu{
+    display: none;
+    position: absolute;
+    z-index: 1;
+    padding: 5px;
+    min-width: 158px;
+    background-color: #e1f8fb;
+    color: gray;
+}
+
+.dropdown-menu a:hover{
+    background-color: aquamarine;
+    color: #fff;
+}
+
+.right-menu:hover .dropdown-menu{
+    display: block;
+    text-align: center;
+}
+    </style>
+</head>
+
+
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -25,11 +59,24 @@
                 @endcan
                 @can('user_access')
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <div style="color: gray;">
+                            <div class="right-menu">
+                                Manage Employees
+                                <div class="dropdown-menu">
+                                    <a href="{{ route('payroll.index') }}" style="display: block; padding: 0.3rem;"  :active="request()->routeIs('payroll.*')">Payroll</a><hr>
+                                    <a href="{{ route('users.index')}}" style="display: block; padding: 0.3rem;"  :active="request()->routeIs('users.*')">Update Profile</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endcan
+                <!-- @can('user_access')
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('users.*')">
                             Users
                         </x-jet-nav-link>
                     </div>
-                @endcan
+                @endcan -->
             </div>
 
             <!-- Settings Dropdown -->

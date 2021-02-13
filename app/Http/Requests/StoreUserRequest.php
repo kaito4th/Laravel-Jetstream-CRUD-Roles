@@ -28,6 +28,21 @@ class StoreUserRequest extends FormRequest
                 'required',
                 'array',
             ],
+            'address'    => [
+                'required',
+                'string',
+            ],
+            'number'    => [
+                'required',
+                'string',
+            ],
+            'daily_rate'    => [
+                'required',
+            ],
+            // 'attendance_count'    => [
+            //     'required',
+            //     'integer',
+            // ],
         ];
     }
 

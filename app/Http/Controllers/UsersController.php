@@ -8,6 +8,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use App\Models\Payroll;
 use Symfony\Component\HttpFoundation\Response;
 
 class UsersController extends Controller
@@ -15,16 +16,16 @@ class UsersController extends Controller
     public function index()
     {
         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        
         $users = User::with('roles')->get();
 
-        return view('users.index', compact('users'));
+        return view('payroll.staff-index', compact('users'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        //select
         $roles = Role::pluck('title', 'id');
 
         return view('users.create', compact('roles'));
@@ -33,6 +34,14 @@ class UsersController extends Controller
     public function store(StoreUserRequest $request)
     {
         $user = User::create($request->validated());
+        $rate = Payroll::create([
+        'user_id'       => $user->id, 
+        'daily_rate'    => $user->daily_rate,
+        'overtime_rate' => $user->daily_rate / 8,
+        'overtime_pay'  => $user->daily_rate / 8 * 1.25,
+        'sunday_rate'   => $user->daily_rate / 8 * 1.3,
+        ]);
+
         $user->roles()->sync($request->input('roles', []));
 
         return redirect()->route('users.index');

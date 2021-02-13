@@ -20,4 +20,6 @@ module.exports = {
     },
 
     plugins: [require('@tailwindcss/ui')],
+
+    darkMode: 'media',
 };

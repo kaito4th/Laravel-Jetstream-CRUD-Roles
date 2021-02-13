@@ -1,0 +1,99 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif; 
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.container{
+    max-width: 800px;
+    margin: 50px auto;
+}
+
+.tab-trigger{
+    /*margin: 0;*/
+}
+
+.tab-trigger ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+}
+
+.tab-trigger ul li{
+    /*margin: 0;*/
+}
+
+.tab-trigger ul li label{
+    position: relative;
+    display: block;
+    margin: 0.1rem;
+    padding: 8px 15px;
+    cursor: pointer;
+    min-width: 100px;
+    text-align: center;
+    font-weight: 700;
+    background-color: bisque;
+    border-radius: 8px 8px 0 0;
+}
+
+.tab-trigger ul li:nth-child(1) label{
+    background: #56ff75;
+}
+
+.tab-trigger ul li:nth-child(2) label{
+    background: #56ff75;
+}
+
+.tab-trigger ul li:nth-child(3) label{
+    background: #56ff75;
+}
+
+.tab-trigger ul li:nth-child(4) label{
+    background: #56ff75;
+}
+
+.tab-container-wrap{
+
+}
+
+.tab-container-wrap div + input{
+    position: absolute;
+    width: 0;
+    height: 0;
+    margin:  0;
+    z-index: -100;
+    top: -10000px;
+}
+
+.tab-container-wrap input:checked + .tab-content-box{
+    display: block;
+}
+
+.tab-content-box{
+    background: #f0f0f0;
+    padding: 20px;
+    display: none;
+}
+
+.tab-content-box:nth-of-type(1){
+    background: #eff0ee;
+}
+
+.tab-content-box:nth-of-type(2){
+    background: #eff0ee;
+}
+
+.tab-content-box:nth-of-type(3){
+    background: #eff0ee;
+}
+
+.tab-content-box:nth-of-type(4){
+    background: #eff0ee;
+}

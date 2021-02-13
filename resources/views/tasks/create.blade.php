@@ -14,6 +14,22 @@
                         <div class="px-4 py-5 bg-white sm:p-6">
                             <label for="description" class="block font-medium text-sm text-gray-700">Description</label>
                             <input type="text" name="description" id="description" type="text" class="form-input rounded-md shadow-sm mt-1 block w-full"
+                                   value="{{ 'Payroll for the Period of:' }}" />
+                            @error('description')
+                                <p class="text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="px-4 py-5 bg-white sm:p-6">
+                            <label for="description" class="block font-medium text-sm text-gray-700">Start</label>
+                            <input type="date" name="start" id="start" class="form-input rounded-md shadow-sm mt-1 block w-full"
+                                   value="{{ old('description', '') }}" />
+                            @error('description')
+                                <p class="text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="px-4 py-5 bg-white sm:p-6">
+                            <label for="description" class="block font-medium text-sm text-gray-700">End</label>
+                            <input type="date" name="end" id="end" class="form-input rounded-md shadow-sm mt-1 block w-full"
                                    value="{{ old('description', '') }}" />
                             @error('description')
                                 <p class="text-sm text-red-600">{{ $message }}</p>

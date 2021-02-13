@@ -1,0 +1,11 @@
+.dropdown-menu{
+    display: none;
+    position: absolute;
+    z-index: 1;
+    color: white;
+}
+
+.dropdown-menu a:hover{
+    background-color: aquamarine;
+    color: #fff;
+}

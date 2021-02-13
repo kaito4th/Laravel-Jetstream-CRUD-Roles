@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Create User
+            Add New Employee
         </h2>
     </x-slot>
 
@@ -11,6 +11,14 @@
                 <form method="post" action="{{ route('users.store') }}">
                     @csrf
                     <div class="shadow overflow-hidden sm:rounded-md">
+                    <div class="px-4 py-5 bg-white sm:p-6">
+                            <label for="name" class="block font-medium text-sm text-gray-700">ID</label>
+                            <input type="text" name="name" id="name" class="form-input rounded-md shadow-sm mt-1 block w-full"
+                                   value="{{ old('name', '') }}" />
+                            @error('name')
+                                <p class="text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
                         <div class="px-4 py-5 bg-white sm:p-6">
                             <label for="name" class="block font-medium text-sm text-gray-700">Name</label>
                             <input type="text" name="name" id="name" class="form-input rounded-md shadow-sm mt-1 block w-full"
@@ -19,7 +27,22 @@
                                 <p class="text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
-
+                        <div class="px-4 py-5 bg-white sm:p-6">
+                            <label for="address" class="block font-medium text-sm text-gray-700">Address</label>
+                            <input type="text" name="address" id="address" class="form-input rounded-md shadow-sm mt-1 block w-full"
+                                   value="{{ old('address', '') }}" />
+                            @error('name')
+                                <p class="text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="px-4 py-5 bg-white sm:p-6">
+                            <label for="number" class="block font-medium text-sm text-gray-700">Number</label>
+                            <input type="text" name="number" id="number" class="form-input rounded-md shadow-sm mt-1 block w-full"
+                                   value="{{ old('number', '') }}" />
+                            @error('name')
+                                <p class="text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
                         <div class="px-4 py-5 bg-white sm:p-6">
                             <label for="email" class="block font-medium text-sm text-gray-700">Email</label>
                             <input type="email" name="email" id="email" class="form-input rounded-md shadow-sm mt-1 block w-full"
@@ -36,6 +59,15 @@
                                 <p class="text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
+                        <div class="px-4 py-5 bg-white sm:p-6">
+                            <label for="daily_rate" class="block font-medium text-sm text-gray-700">Daily Rate</label>
+                            <input type="number" Step=".01" name="daily_rate" id="daily_rate" class="form-input rounded-md shadow-sm mt-1 block w-full"
+                                   value="{{ old('daily_rate', '') }}" />
+                            @error('name')
+                                <p class="text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        
 
                         <div class="px-4 py-5 bg-white sm:p-6">
                             <label for="roles" class="block font-medium text-sm text-gray-700">Roles</label>

@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PayrollController;
+use App\Http\Controllers\AttendanceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth/login');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
@@ -25,4 +27,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('tasks', \App\Http\Controllers\TasksController::class);
 
     Route::resource('users', \App\Http\Controllers\UsersController::class);
+    
+    // Route::get('payrolls/{id}' , [\App\Http\Controllers\PayrollController::class,'show'])->name('/payrolls');
+    Route::resource('payroll', \App\Http\Controllers\PayrollController::class);
+    Route::post('/{id}',[PayrollController::class,'store']);
+
+    //Route for attendance
+    Route::resource('attendance', \App\Http\Controllers\AttendanceController::class);
+    //Route::get('/{id}', [AttendanceController::class, 'store']);
 });
+
+
