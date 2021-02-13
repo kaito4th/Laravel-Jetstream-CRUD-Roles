@@ -43,16 +43,16 @@ class AttendanceController extends Controller
      */
     public function store($id,Request $request)
     {
+        $reg = 1;
         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $name = DB::table('users')->where('id', $id)->pluck('name');
         $attendance = Attendance::updateOrCreate([
-            'user_id'          => $id,
-            'name'             => $name,
+            'user_id'           => $id,
         ],
         [
-            'attendance_count' => + 1,
-            'regular_day'      => + 1,
+            'name'              => $name,
             ]);
+        DB::table('attendances')->increment('attendance_count', + 1);
         //$user = User::select('id','name')->where('id', $id)->first();
         
 
