@@ -166,12 +166,12 @@ body{
                 @csrf
                 <div class="col-span-6 sm:col-span-4" style="margin: 0 0 0 3rem;">
                     <label style="display: inline-block;">Date:</label> 
-                    <x-jet-input id="date" type="date" class="mt-1 inline-block"/>
-                        <x-jet-input-error for="date" class="mt-2" />
+                    <x-jet-input id="date_att" type="date" class="mt-1 inline-block"/>
+                        <x-jet-input-error for="date_att" class="mt-2" />
                 </div>
                 <div class="col-span-6 sm:col-span-4" style="margin: 0 0 0 3rem;">
                     <label style="display: inline-block;">Time in:</label> 
-                    <x-jet-input id="time_in" type="time_in" class="mt-1 inline-block"/>
+                    <x-jet-input id="time_in" type="time" class="mt-1 inline-block"/>
                         <x-jet-input-error for="time_in" class="mt-2" />
                 </div>
                 <div class="col-span-6 sm:col-span-4" style="margin: 0 0 0 3rem;">

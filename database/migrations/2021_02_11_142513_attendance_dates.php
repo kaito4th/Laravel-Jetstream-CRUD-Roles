@@ -17,8 +17,8 @@ class AttendanceDates extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->date('date');
-            $table->time('time_in');
-            $table->time('time_out');
+            $table->time('time_in')->nullable();
+            $table->time('time_out')->nullable();
             $table->timestamps();
         });
     }

@@ -7,7 +7,9 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\Task;
 use App\Models\Payroll;
+use App\Models\Attendance_date;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
@@ -41,9 +43,8 @@ class AttendanceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store($id,Request $request)
+    public function store(Request $request,$id)
     {
-        $reg = 1;
         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $name = DB::table('users')->where('id', $id)->pluck('name');
         $attendance = Attendance::updateOrCreate([
@@ -52,7 +53,18 @@ class AttendanceController extends Controller
         [
             'name'              => $name,
             ]);
-        DB::table('attendances')->increment('attendance_count', + 1);
+        DB::table('attendances')->where('user_id', $id)->increment('attendance_count', + 1);
+
+            $date = $request->input('date');
+            return $date;
+
+        // $date = $request->date;
+        // return $date;
+        // $dates = Attendance_date::create([
+        //     'user_id'   => $id,
+        //     'date'      => '2021/02/02',
+        //     'time_in'   => $request->input('time_in'),
+        // ]);
         //$user = User::select('id','name')->where('id', $id)->first();
         
 
