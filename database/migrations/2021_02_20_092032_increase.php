@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class StaffAttendance extends Migration
+class Increase extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,15 @@ class StaffAttendance extends Migration
      */
     public function up()
     {
-        Schema::create('attendances' ,function (Blueprint $table){
+        Schema::create('Increases', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->integer('attendance_count')->default(0)->nullable();
-            $table->integer('regular_day')->default(0)->nullable();
-            $table->integer('half_day')->default(0)->nullable();
-            $table->integer('sunday')->default(0)->nullable();
+            $table->date('inc_date');
+            $table->string('inc_day');
+            $table->decimal('increase', 8,2);
+            $table->string('inc_remarks');
             $table->timestamps();
         });
-
     }
 
     /**
@@ -32,6 +31,6 @@ class StaffAttendance extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('attendance');
+        Schema::dropIfExists('Increases');
     }
 }

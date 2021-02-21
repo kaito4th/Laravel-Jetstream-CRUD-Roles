@@ -14,6 +14,7 @@ class Attendance_date extends Model
     protected $fillable = [
         'user_id',
         'date',
+        'day',
         'time_in',
         'time_out',
     ];

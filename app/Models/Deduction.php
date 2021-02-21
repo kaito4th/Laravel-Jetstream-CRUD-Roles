@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Attendance extends Model
+class Deduction extends Model
 {
     use HasFactory;
 
@@ -13,10 +13,10 @@ class Attendance extends Model
 
     protected $fillable = [
         'user_id',
-        'attendance_count',
-        'regular_day',
-        'half_day',
-        'sunday',
-
+        'SSS_premium',
+        'SSS_loan',
+        'philhealth',
+        'pagibig',
+        'pagibig_loan',
     ];
 }

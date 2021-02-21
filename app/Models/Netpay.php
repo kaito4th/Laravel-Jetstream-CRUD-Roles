@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Attendance extends Model
+class Netpay extends Model
 {
     use HasFactory;
 
@@ -13,10 +13,6 @@ class Attendance extends Model
 
     protected $fillable = [
         'user_id',
-        'attendance_count',
-        'regular_day',
-        'half_day',
-        'sunday',
-
+        'netpay',
     ];
 }

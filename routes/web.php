@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\OtherDeductionController;
+use App\Http\Controllers\IncreaseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +37,14 @@ Route::group(['middleware' => 'auth'], function () {
     //Route for attendance
     Route::resource('attendance', \App\Http\Controllers\AttendanceController::class);
     Route::post('/{id}', [AttendanceController::class, 'store']);
+
+    //Route for Deduction
+    Route::resource('otherdeduction', \App\Http\Controllers\OtherDeductionController::class);
+    Route::post('/payroll/otherdeduction/{id}', [OtherDeductionController::class, 'store']);
+
+    //Route for Increase
+    Route::resource('increase', \App\Http\Controllers\IncreaseController::class);
+    Route::post('/payroll/increase/{id}', [IncreaseController::class, 'store']);
 });
 
 
