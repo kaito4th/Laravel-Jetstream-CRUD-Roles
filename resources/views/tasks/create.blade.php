@@ -21,7 +21,7 @@
                         </div>
                         <div class="px-4 py-5 bg-white sm:p-6">
                             <label for="description" class="block font-medium text-sm text-gray-700">Start</label>
-                            <input type="date" name="start" id="start" class="form-input rounded-md shadow-sm mt-1 block w-full"
+                            <input type="date" name="start" id="start" class="form-input rounded-md shadow-sm mt-1 block w-full datepicker"
                                    value="{{ old('description', '') }}" />
                             @error('description')
                                 <p class="text-sm text-red-600">{{ $message }}</p>
@@ -29,7 +29,7 @@
                         </div>
                         <div class="px-4 py-5 bg-white sm:p-6">
                             <label for="description" class="block font-medium text-sm text-gray-700">End</label>
-                            <input type="date" name="end" id="end" class="form-input rounded-md shadow-sm mt-1 block w-full"
+                            <input type="date" name="end" id="end" class="form-input rounded-md shadow-sm mt-1 block w-full datepicker"
                                    value="{{ old('description', '') }}" />
                             @error('description')
                                 <p class="text-sm text-red-600">{{ $message }}</p>
@@ -47,3 +47,11 @@
         </div>
     </div>
 </x-app-layout>
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    $( function (){
+        $( ".datepicker").datepicker();
+    }
+</script>

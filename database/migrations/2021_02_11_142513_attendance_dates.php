@@ -16,7 +16,7 @@ class AttendanceDates extends Migration
         Schema::create('attendance_dates', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->date('date');
+            $table->string('date');
             $table->string('day');
             $table->time('time_in');
             $table->time('time_out');

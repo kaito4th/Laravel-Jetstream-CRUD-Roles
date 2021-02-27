@@ -16,10 +16,10 @@ class OtherDeductions extends Migration
         Schema::create('Other_deductions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->date('deduction_date');
-            $table->string('deduction_day');
+            $table->string('deduction_date')->nullable();
+            $table->string('deduction_day')->nullable();
             $table->decimal('deduction_value');
-            $table->string('deduction_remarks');
+            $table->string('deduction_remarks')->nullable();
             $table->timestamps();
         });
     }

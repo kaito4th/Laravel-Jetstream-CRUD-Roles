@@ -4,19 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use App\Models\Role;
 use App\Models\Attendance;
-use App\Models\Attendance_date;
+use App\Models\Role;
 use App\Models\User;
+use App\Models\Task;
+use App\Models\Payroll;
+use App\Models\Increase;
 use App\Models\Deduction;
-use App\Models\Total_gross_pay;
-use App\Models\Total_increase;
 use App\Models\Remark;
 use App\Models\Netpay;
 use App\Models\Total_deduction;
+use App\Models\Attendance_date;
+use App\Models\Total_gross_pay;
+use App\Models\Total_increase;
+use App\Models\Other_deduction;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
-use App\Models\Payroll;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class UsersController extends Controller
@@ -55,6 +61,13 @@ class UsersController extends Controller
             'regular_day'       => 0,
             'half_day'          => 0,
             'sunday'            => 0,
+        ]);
+
+        Remark::create([
+            'user_id'      => $user->id,
+            'late'         => 0,
+            'overtime'     => 0,
+            'sun_overtime' => 0,
         ]);
 
         Total_gross_pay::create([
@@ -124,11 +137,21 @@ class UsersController extends Controller
         return redirect()->route('users.index');
     }
 
-    public function destroy(User $user)
+    public function destroy($id)
     {
         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $user->delete();
+        $user             = User::where('id',$id)->delete();
+        $attendance       = Attendance::where('user_id',$id)->delete();
+        $attendance_date  = Attendance_date::where('user_id',$id)->delete();
+        $deduction        = Deduction::where('user_id',$id)->delete();
+        $increase         = Increase::where('user_id',$id)->delete();
+        $other_deduct     = Other_deduction::where('user_id',$id)->delete();
+        $netpay           = Netpay::where('user_id',$id)->delete();
+        $payroll          = Payroll::where('user_id',$id)->delete();
+        $remark           = Remark::where('user_id',$id)->delete();
+        $total_deduct     = Total_deduction::where('user_id',$id)->delete();
+        $total_gross      = Total_gross_pay::where('user_id',$id)->delete();
+        $total_inc        = Total_increase::where('user_id',$id)->delete();
 
         return redirect()->route('users.index');
     }

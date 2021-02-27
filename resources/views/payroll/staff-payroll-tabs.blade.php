@@ -130,7 +130,7 @@ body{
                 <label for="tab3">Deductions</label>
             </li>
             <li>
-                <label for="tab4">Increase</label>
+                <label for="tab4">Allowance</label>
             </li>
             <li>
                 <label for="tab5">Payslip</label>
@@ -175,6 +175,14 @@ body{
                     <label style="display: inline-block;">Date:</label> 
                     <x-jet-input id="date_att" name="date_att" type="date" class="mt-1 inline-block"/>
                         <x-jet-input-error for="date_att" class="mt-2" />
+                    <div class="inline" style="padding: 0 5rem 0 0; float: right;">
+                        <label style="display: inline;">Special:</label> 
+                        <select id="select_special" name="select_special" class="w-36 h-8 rounded-lg border-4 border-light-blue-500 border-opacity-100">
+                            <option>--select--</option>
+                            <option id="holiday" name="holiday" value="holiday">Holiday</option>
+                            <!-- <option id="leave" name="leave" value="leave">Leave w/ Pay</option> -->
+                        </select>
+                    </div>
                 </div>
                 <div class="col-span-6 sm:col-span-4" style="margin: 0 0 0 3rem;">
                     <label style="display: inline-block;">Time in:</label> 
@@ -270,12 +278,12 @@ body{
 
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                            <!-- <a href="{{ route('users.show', $user->id) }}" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>-->
-                                            <a href="#" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a>
-                                            <!-- <form class="inline-block" action="{{ route('users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Are you sure?');">
+                                            <!-- <a href="#" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a> -->
+                                            <form class="inline-block" action="{{ route('attendance.destroy', ['id'=>$user->id, 'iid'=>$attendance_date->id] )}}" method="GET" onsubmit="return confirm('Are you sure?');">
                                                 <input type="hidden" name="_method" value="DELETE">
                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                 <input type="submit" class="text-red-600 hover:text-red-900 mb-2 mr-2" style="box-sizing: unset;" value="Delete">
-                                            </form> -->
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -297,6 +305,16 @@ body{
                     <label style="display: inline-block;">Date:</label> 
                     <x-jet-input id="date_ded" name="date_ded" type="date" class="mt-1 inline-block"/>
                         <x-jet-input-error for="date_ded" class="mt-2" />
+                    <div class="inline" style="padding: 0 5rem 0 0; float: right;">
+                        <label style="display: inline;">Others:</label> 
+                        <select id="select_deduct" name="select_deduct" class="w-36 h-8 rounded-lg border-4 border-light-blue-500 border-opacity-100">
+                            <option id="default" name="default" value="default">--select--</option>
+                            <option id="sss_premium" name="sss_premium" value="sss_premium">SSS Premium</option>
+                            <option id="sss_loan" name="sss_loan" value="sss_loan">SSS Loan</option>
+                            <option id="pagibig" name="pagibig" value="pagibig">PAG-IBIG</option>
+                            <option id="pagibig_loan" name="pagibig_loan" value="pagibig_loan">PAG-IBIG Loan</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="col-span-6 sm:col-span-4" style="margin: 0 0 0 3rem;">
                     <label style="display: inline-block;">Value:</label> 
@@ -469,12 +487,12 @@ body{
 
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                            <!-- <a href="{{ route('users.show', $user->id) }}" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>-->
-                                            <a href="#" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a>
-                                            <!-- <form class="inline-block" action="{{ route('users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Are you sure?');">
+                                            <!-- <a href="{{$user->id}}/otherdeduction/delete/{{$other_deduc->id}}" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a> -->
+                                            <form class="inline-block" action="{{ route('otherdeduction.destroy', ['id'=>$user->id, 'iid'=>$other_deduc->id] )}}" method="GET" onsubmit="return confirm('Are you sure?');">
                                                 <input type="hidden" name="_method" value="DELETE">
                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                 <input type="submit" class="text-red-600 hover:text-red-900 mb-2 mr-2" style="box-sizing: unset;" value="Delete">
-                                            </form> -->
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -489,7 +507,7 @@ body{
         </div>
         <input type="radio" id="tab4" name="1">
         <div class="tab-content-box">
-            <h3 class="ml-4 text-lg leading-7 font-semibold">Increase</h3>
+            <h3 class="ml-4 text-lg leading-7 font-semibold">Allowance</h3>
             <form action="increase/{{$user->id}}" method="POST">
                 @csrf
                 <div class="col-span-6 sm:col-span-4" style="margin: 0 0 0 3rem;">
@@ -562,12 +580,11 @@ body{
 
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                            <!-- <a href="{{ route('users.show', $user->id) }}" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>-->
-                                            <a href="#" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a>
-                                            <!-- <form class="inline-block" action="{{ route('users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Are you sure?');">
+                                            <form class="inline-block" action="{{ route('increase.destroy', ['id'=>$user->id, 'iid'=>$increase->id] )}}" method="GET" onsubmit="return confirm('Are you sure?');">
                                                 <input type="hidden" name="_method" value="DELETE">
                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                 <input type="submit" class="text-red-600 hover:text-red-900 mb-2 mr-2" style="box-sizing: unset;" value="Delete">
-                                            </form> -->
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -583,6 +600,7 @@ body{
         <input type="radio" id="tab5" name="1">
         <div class="tab-content-box">
             <h3 class="ml-4 text-lg leading-7 font-semibold">Payslip</h3>
+            <x-jet-button class="bg-red-500 hover:bg-red-700" style="float: right;" id="printQuery" onclick="printByQuery()" target="_blank" >PRINT PDF</x-jet-button>
             <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                         <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                             <table class="min-w-full divide-y divide-gray-200 w-full">
@@ -761,7 +779,7 @@ body{
 
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-green-900 font-bold">
-                                            {{ 'Total O.T' }}
+                                            {{ 'Total O.T on Regular Day' }}
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
@@ -925,17 +943,17 @@ body{
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            {{ '$total_late->late' }}
+                                            {{ $total_late }} hr(s)
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            {{ '0.00' }}
+                                            {{ $total_late_deduct }}
                                         </td>
                                     </tr>
                             @foreach ($other_deduct as $others)
                                 <tr>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            {{ $others->deduction_remarks }}
+                                            {{ $others->deduction_remarks }}&nbsp&nbsp ({{ $others->deduction_date }} - {{ $others->deduction_day }})
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
@@ -965,8 +983,7 @@ body{
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-black-900 font-bold text-xl rounded-full bg-red-300">
-                                            {{ number_format( $total_deduct->total_deduction + $deductions->philhealth + $deductions->SSS_premium
-                                                + $deductions->SSS_loan + $deductions->pagibig + $deductions->pagibig_loan, 2, '.', '')  }}
+                                            {{ $total_deduct->total_deduction }}
                                         </td>
                                     </tr>
 
@@ -990,12 +1007,26 @@ body{
                                 </tbody>
                             </table>
                         </div>
-                    </div>
+                    </div>                             
                 </div>
             </div>
         </div>
     </div>
 </div>
 </x-app-layout>
+
+<script>
+function printByQuery(){
+    window.location.href = "/payslip/{{$user->id}}";
+        var url = window.location.href;
+        var newUrl = url.substring(url.indexOf("?"));
+    // console.log(newUrl == url);
+        if(newUrl != url){
+    window.open("/print/single_payroll"+newUrl);
+        }
+    
+    }
+
+</script>
 
     

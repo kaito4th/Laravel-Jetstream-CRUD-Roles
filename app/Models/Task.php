@@ -15,4 +15,10 @@ class Task extends Model
         'start',
         'end'
     ];
+
+    public function setDate($value){
+        $this->attributes['start'] = Carbon::createFromFormat('m/d/Y', $value)->format('Y-m-d');
+        $this->attributes['end'] = Carbon::createFromFormat('m/d/Y', $value)->format('Y-m-d');
+    }
+    
 }
