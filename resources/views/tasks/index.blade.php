@@ -36,8 +36,8 @@
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            {{ $task->description}}<h3 class="ml-2 text-lg leading-7 font-semibold inline-block" style="color:green; font-size: 20px;">{{$task->start}}</h3>&nbsp to
-                                            <h3 class="ml-2 text-lg leading-7 font-semibold inline-block" style="color:green; font-size: 20px;">{{$task->end}}</h3>
+                                            {{ $task->description}}<h3 class="ml-2 text-lg leading-7 font-semibold inline-block" style="color:green; font-size: 20px;">{{date('d-m-Y', strtotime($task->start))}}</h3>&nbsp to
+                                            <h3 class="ml-2 text-lg leading-7 font-semibold inline-block" style="color:green; font-size: 20px;">{{date('d-m-Y', strtotime($task->end))}}</h3>
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">

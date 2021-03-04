@@ -12,10 +12,10 @@
                     @csrf
                     <div class="shadow overflow-hidden sm:rounded-md">
                     <div class="px-4 py-5 bg-white sm:p-6">
-                            <label for="name" class="block font-medium text-sm text-gray-700">ID</label>
-                            <input type="text" name="name" id="name" class="form-input rounded-md shadow-sm mt-1 block w-full"
-                                   value="{{ old('name', '') }}" />
-                            @error('name')
+                            <label for="user_id" class="block font-medium text-sm text-gray-700">ID</label>
+                            <input type="text" name="user_id" id="user_id" class="form-input rounded-md shadow-sm mt-1 block w-full"
+                                   value="{{ old('user_id', '') }}" />
+                            @error('user_id')
                                 <p class="text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
@@ -31,7 +31,7 @@
                             <label for="address" class="block font-medium text-sm text-gray-700">Address</label>
                             <input type="text" name="address" id="address" class="form-input rounded-md shadow-sm mt-1 block w-full"
                                    value="{{ old('address', '') }}" />
-                            @error('name')
+                            @error('address')
                                 <p class="text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
@@ -39,7 +39,7 @@
                             <label for="number" class="block font-medium text-sm text-gray-700">Number</label>
                             <input type="text" name="number" id="number" class="form-input rounded-md shadow-sm mt-1 block w-full"
                                    value="{{ old('number', '') }}" />
-                            @error('name')
+                            @error('number')
                                 <p class="text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
@@ -52,13 +52,13 @@
                             @enderror
                         </div>
 
-                        <div class="px-4 py-5 bg-white sm:p-6">
+                        <!-- <div class="px-4 py-5 bg-white sm:p-6">
                             <label for="password" class="block font-medium text-sm text-gray-700">Password</label>
                             <input type="password" name="password" id="password" class="form-input rounded-md shadow-sm mt-1 block w-full" />
                             @error('password')
                                 <p class="text-sm text-red-600">{{ $message }}</p>
                             @enderror
-                        </div>
+                        </div> -->
                         <div class="px-4 py-5 bg-white sm:p-6">
                             <label for="daily_rate" class="block font-medium text-sm text-gray-700">Daily Rate</label>
                             <input type="number" Step=".01" name="daily_rate" id="daily_rate" class="form-input rounded-md shadow-sm mt-1 block w-full"

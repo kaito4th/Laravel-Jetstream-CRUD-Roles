@@ -15,7 +15,7 @@ class OtherDeductions extends Migration
     {
         Schema::create('Other_deductions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table->string('user_id');
             $table->string('deduction_date')->nullable();
             $table->string('deduction_day')->nullable();
             $table->decimal('deduction_value');

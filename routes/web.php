@@ -5,6 +5,7 @@ use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\OtherDeductionController;
 use App\Http\Controllers\IncreaseController;
+use App\Http\Controllers\UsersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('tasks', \App\Http\Controllers\TasksController::class);
 
     Route::resource('users', \App\Http\Controllers\UsersController::class);
+    Route::get('edit/{id}', [UsersController::class, 'edit']);
     
     // Route::get('payrolls/{id}' , [\App\Http\Controllers\PayrollController::class,'show'])->name('/payrolls');
     Route::resource('payroll', \App\Http\Controllers\PayrollController::class);
@@ -50,7 +52,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/payroll/{id}/increase/delete/{iid}', [IncreaseController::class, 'destroy'])->name('increase.destroy');
 
     //Route for Print
-    Route::get('/payslip/{id}', [PayrollController::class, 'print']);
+    Route::get('/payslip/{user_id}', [PayrollController::class, 'print']);
     Route::get('/allpayslip', [PayrollController::class, 'allprint']);
 
 

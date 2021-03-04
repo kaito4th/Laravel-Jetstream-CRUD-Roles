@@ -15,7 +15,7 @@ class StaffAttendance extends Migration
     {
         Schema::create('attendances' ,function (Blueprint $table){
             $table->id();
-            $table->foreignId('user_id');
+            $table->string('user_id');
             $table->integer('attendance_count')->default(0)->nullable();
             $table->integer('regular_day')->default(0)->nullable();
             $table->integer('half_day')->default(0)->nullable();

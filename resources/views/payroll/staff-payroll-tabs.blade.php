@@ -111,7 +111,7 @@ body{
     <h2 class="ml-20 text-lg leading-7 font-semibold inline-block" style="color:green; font-size: 20px;">{{$user->name}}</h2>'s 
     <h3 class="text-lg leading-7 font-semibold inline-block">Payroll for the period of 
         <div class="text-lg leading-7 font-semibold inline-block" style="color:green; font-size: 26px;">
-            {{$task->start}} - {{$task->end}}
+            {{date('d-m-Y', strtotime($task->start))}} - {{date('d-m-Y', strtotime($task->end))}}
         </div>
     </h3>
     </x-slot>
@@ -141,39 +141,102 @@ body{
         <input type="radio" checked id="tab1" name="1">
         <div class="tab-content-box">
             <h3 class="ml-4 text-lg leading-7 font-semibold" style="padding: 0 0 40px 0;">Rates</h3>
-             <form action="/{id}" method="post">
-             @csrf
-                <div class="col-span-6 sm:col-span-4" style="margin: 0 0 0 3rem;">
-                    Daily Rate: <x-jet-input id="daily_rate" value="{{ $rates->daily_rate }}" name="daily_rate" type="text" class="mt-1 inline-block" style="margin: 30px 0 0 20px;" readonly/>
-                        <x-jet-input-error for="daily_rate" class="mt-2" />
+            <div style="background-color: white;">
+                <div class="flex flex-col">
+                <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                    <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                        <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                            <table class="min-w-full divide-y divide-gray-200 w-full">
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                <!--foreach here-->
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            {{ 'Daily Rate' }}
+                                        </td>
+
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                           
+                                        </td>
+
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            
+                                        </td>
+
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            {{ $rates->daily_rate }}
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            {{ 'Overtime Pay' }}
+                                        </td>
+
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                           
+                                        </td>
+
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            
+                                        </td>
+
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            {{ $rates->overtime_pay }} / hour
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            {{ 'Sunday Pay' }}
+                                        </td>
+
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                           
+                                        </td>
+
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            
+                                        </td>
+
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            {{ number_format($rates->daily_rate * 1.3,'2','.','') }}
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            {{ 'Sunday Overtime Pay' }}
+                                        </td>
+
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                           
+                                        </td>
+
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            
+                                        </td>
+
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            {{ $rates->sunday_rate }} / hour
+                                        </td>
+                                    </tr>
+                                <!--endforeach-->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-span-6 sm:col-span-4" style="margin: 0 0 0 3rem;">
-                    Overtime Rate: <x-jet-input id="overtime_rate" value="{{ $rates->overtime_rate }}" name="overtime_rate" type="text" class="mt-1 inline-block" style="margin: 30px 0 0 20px;" readonly/>
-                        <x-jet-input-error for="overtime_rate" class="mt-2" />
-                </div>
-                <div class="col-span-6 sm:col-span-4" style="margin: 0 0 0 3rem;">
-                    Overtime Pay: <x-jet-input id="overtime_pay" value="{{ $rates->overtime_pay }}" name="overtime_pay" type="text" class="mt-1 inline-block" style="margin: 30px 0 0 20px;" readonly/>
-                        <x-jet-input-error for="overtime_pay" class="mt-2" /> / hour
-                </div>
-                <div class="col-span-6 sm:col-span-4" style="margin: 0 0 0 3rem;">
-                    Sunday Rate: <x-jet-input id="sunday_rate" value="{{ $rates->sunday_rate }}" name="sunday_rate" type="text" class="mt-1 inline-block" style="margin: 30px 0 0 20px;" readonly/>
-                        <x-jet-input-error for="sunday_rate" class="mt-2" />
-                </div>
-                <div class="col-span-6 sm:col-span-4">
-                <x-jet-button class="ml-4" style="float: right;">
-                    Submit
-                </x-jet-button>
-                </div>
-            </form>
+            </div>
+            </div>
         </div>
         <input type="radio" id="tab2" name="1">
         <div class="tab-content-box">
             <h3 class="ml-4 text-lg leading-7 font-semibold">Attendance</h3>
-                <form action="/{{$user->id}}" method="POST">
+                <form action="/{{$user->user_id}}" method="post">
                 @csrf
                 <div class="col-span-6 sm:col-span-4" style="margin: 0 0 0 3rem;">
                     <label style="display: inline-block;">Date:</label> 
-                    <x-jet-input id="date_att" name="date_att" type="date" class="mt-1 inline-block"/>
+                    <x-jet-input id="date_att" name="date_att" type="date" style="margin: 0 0 0 2rem;" class="mt-1 inline-block"/>
                         <x-jet-input-error for="date_att" class="mt-2" />
                     <div class="inline" style="padding: 0 5rem 0 0; float: right;">
                         <label style="display: inline;">Special:</label> 
@@ -186,12 +249,12 @@ body{
                 </div>
                 <div class="col-span-6 sm:col-span-4" style="margin: 0 0 0 3rem;">
                     <label style="display: inline-block;">Time in:</label> 
-                    <x-jet-input id="time_in" name="time_in" type="time" class="mt-1 inline-block"/>
+                    <x-jet-input id="time_in" name="time_in" type="time" style="margin: 3px 0 0 1rem;" class="mt-1 inline-block"/>
                         <x-jet-input-error for="time_in" class="mt-2" />
                 </div>
                 <div class="col-span-6 sm:col-span-4" style="margin: 0 0 0 3rem;">
                 <label style="display: inline-block;">Time out:</label> 
-                    <x-jet-input id="time_out" name="time_out" type="time" class="mt-1 inline-block"/>
+                    <x-jet-input id="time_out" name="time_out" type="time" style="margin: 3px 0 0 0.5rem;" class="mt-1 inline-block"/>
                         <x-jet-input-error for="time_out" class="mt-2" />
                 </div>
                 <h3 class="ml-4 text-lg leading-7 font-semibold">Late</h3>
@@ -277,9 +340,7 @@ body{
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                           <!-- <a href="{{ route('users.show', $user->id) }}" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>-->
-                                            <!-- <a href="#" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a> -->
-                                            <form class="inline-block" action="{{ route('attendance.destroy', ['id'=>$user->id, 'iid'=>$attendance_date->id] )}}" method="GET" onsubmit="return confirm('Are you sure?');">
+                                            <form class="inline-block" action="{{ route('attendance.destroy', ['id'=>$user->user_id, 'iid'=>$attendance_date->id] )}}" method="GET" onsubmit="return confirm('Are you sure?');">
                                                 <input type="hidden" name="_method" value="DELETE">
                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                 <input type="submit" class="text-red-600 hover:text-red-900 mb-2 mr-2" style="box-sizing: unset;" value="Delete">
@@ -299,11 +360,11 @@ body{
         <input type="radio" id="tab3" name="1">
         <div class="tab-content-box">
             <h3 class="ml-4 text-lg leading-7 font-semibold">Deductions</h3>
-            <form action="otherdeduction/{{$user->id}}" method="POST">
+            <form action="otherdeduction/{{$user->user_id}}" method="post">
                 @csrf
                 <div class="col-span-6 sm:col-span-4" style="margin: 0 0 0 3rem;">
                     <label style="display: inline-block;">Date:</label> 
-                    <x-jet-input id="date_ded" name="date_ded" type="date" class="mt-1 inline-block"/>
+                    <x-jet-input id="date_ded" name="date_ded" type="date" style="margin: 0 0 0 2rem;" class="mt-1 inline-block"/>
                         <x-jet-input-error for="date_ded" class="mt-2" />
                     <div class="inline" style="padding: 0 5rem 0 0; float: right;">
                         <label style="display: inline;">Others:</label> 
@@ -318,12 +379,12 @@ body{
                 </div>
                 <div class="col-span-6 sm:col-span-4" style="margin: 0 0 0 3rem;">
                     <label style="display: inline-block;">Value:</label> 
-                    <x-jet-input id="deduction_value" name="deduction_value" type="number" step="any" class="mt-1 inline-block"/>
+                    <x-jet-input id="deduction_value" name="deduction_value" style="margin: 3px 0 0 1.65rem;" type="number" step="any" class="mt-1 inline-block"/>
                         <x-jet-input-error for="deduction_value" class="mt-2" />PHP
                 </div>
                 <div class="col-span-6 sm:col-span-4" style="margin: 0 0 0 3rem;">
                     <label style="display: inline-block;">Remarks:</label> 
-                    <x-jet-input id="deduction_remarks" name="deduction_remarks" type="text" class="mt-5 inline-block h-24"/>
+                    <x-jet-input id="deduction_remarks" name="deduction_remarks" type="text" style="margin: 3px 0 0 0.5rem;" class="mt-5 inline-block h-24"/>
                         <x-jet-input-error for="deduction_remarks" class="mt-2" />
                 </div>
                 <div class="col-span-6 sm:col-span-4">
@@ -486,9 +547,7 @@ body{
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                           <!-- <a href="{{ route('users.show', $user->id) }}" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>-->
-                                            <!-- <a href="{{$user->id}}/otherdeduction/delete/{{$other_deduc->id}}" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit</a> -->
-                                            <form class="inline-block" action="{{ route('otherdeduction.destroy', ['id'=>$user->id, 'iid'=>$other_deduc->id] )}}" method="GET" onsubmit="return confirm('Are you sure?');">
+                                            <form class="inline-block" action="{{ route('otherdeduction.destroy', ['id'=>$user->user_id, 'iid'=>$other_deduc->id] )}}" method="GET" onsubmit="return confirm('Are you sure?');">
                                                 <input type="hidden" name="_method" value="DELETE">
                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                 <input type="submit" class="text-red-600 hover:text-red-900 mb-2 mr-2" style="box-sizing: unset;" value="Delete">
@@ -508,21 +567,21 @@ body{
         <input type="radio" id="tab4" name="1">
         <div class="tab-content-box">
             <h3 class="ml-4 text-lg leading-7 font-semibold">Allowance</h3>
-            <form action="increase/{{$user->id}}" method="POST">
+            <form action="increase/{{$user->user_id}}" method="post">
                 @csrf
                 <div class="col-span-6 sm:col-span-4" style="margin: 0 0 0 3rem;">
                     <label style="display: inline-block;">Date:</label> 
-                    <x-jet-input id="inc_date" name="inc_date" type="date" class="mt-1 inline-block"/>
+                    <x-jet-input id="inc_date" name="inc_date" type="date" style="margin: 0 0 0 2rem;" class="mt-1 inline-block"/>
                         <x-jet-input-error for="inc_date" class="mt-2" />
                 </div>
                 <div class="col-span-6 sm:col-span-4" style="margin: 0 0 0 3rem;">
                     <label style="display: inline-block;">Value:</label> 
-                    <x-jet-input id="increase" name="increase" type="number" step="any" class="mt-1 inline-block"/>
+                    <x-jet-input id="increase" name="increase" type="number" style="margin: 3px 0 0 1.75rem;" step="any" class="mt-1 inline-block"/>
                         <x-jet-input-error for="increase" class="mt-2" />PHP
                 </div>
                 <div class="col-span-6 sm:col-span-4" style="margin: 0 0 0 3rem;">
                     <label style="display: inline-block;">Remarks:</label> 
-                    <x-jet-input id="inc_remarks" name="inc_remarks" type="text" class="mt-5 inline-block h-24"/>
+                    <x-jet-input id="inc_remarks" name="inc_remarks" type="text" style="margin: 3px 0 0 0.5rem;" class="mt-5 inline-block h-24"/>
                         <x-jet-input-error for="inc_remarks" class="mt-2" />
                 </div>
                 <div class="col-span-6 sm:col-span-4">
@@ -579,8 +638,7 @@ body{
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                           <!-- <a href="{{ route('users.show', $user->id) }}" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">View</a>-->
-                                            <form class="inline-block" action="{{ route('increase.destroy', ['id'=>$user->id, 'iid'=>$increase->id] )}}" method="GET" onsubmit="return confirm('Are you sure?');">
+                                            <form class="inline-block" action="{{ route('increase.destroy', ['id'=>$user->user_id, 'iid'=>$increase->id] )}}" method="GET" onsubmit="return confirm('Are you sure?');">
                                                 <input type="hidden" name="_method" value="DELETE">
                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                 <input type="submit" class="text-red-600 hover:text-red-900 mb-2 mr-2" style="box-sizing: unset;" value="Delete">
@@ -608,7 +666,7 @@ body{
                                 DRC DREAMS BUILDERS AND CONSTRUCTION, INC.
                             </div>
                             <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8 bg-gray-10 font-bold font-sans text-center" style="font-size: 12px;">
-                                Payroll for the Period of {{$task->start}} - {{$task->end}}
+                                Payroll for the Period of {{date('d-m-Y', strtotime($task->start))}} - {{date('d-m-Y', strtotime($task->end))}}
                             </div>
                                 <tbody class="bg-white divide-y divide-gray-200">
                                     <tr>
@@ -621,7 +679,7 @@ body{
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            {{ $user->id }}
+                                            {{ $user->user_id }}
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
@@ -1017,7 +1075,7 @@ body{
 
 <script>
 function printByQuery(){
-    window.location.href = "/payslip/{{$user->id}}";
+    window.location.href = "/payslip/{{$user->user_id}}";
         var url = window.location.href;
         var newUrl = url.substring(url.indexOf("?"));
     // console.log(newUrl == url);

@@ -15,7 +15,7 @@ class RemarksTable extends Migration
     {
         Schema::create('Remarks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table->string('user_id');
             $table->integer('late')->nullable();
             $table->integer('overtime')->nullable();
             $table->integer('sun_overtime')->nullable();

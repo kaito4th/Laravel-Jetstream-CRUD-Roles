@@ -15,7 +15,7 @@ class Increase extends Migration
     {
         Schema::create('Increases', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table->string('user_id');
             $table->string('inc_date');
             $table->string('inc_day');
             $table->decimal('increase', 8,2);

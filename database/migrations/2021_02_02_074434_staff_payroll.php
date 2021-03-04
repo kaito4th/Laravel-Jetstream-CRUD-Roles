@@ -15,7 +15,7 @@ class StaffPayroll extends Migration
     {
         Schema::create('payrolls', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table->string('user_id');
             $table->decimal('daily_rate', 8,2);
             $table->decimal('overtime_rate', 8,2);
             $table->decimal('overtime_pay', 8,2);

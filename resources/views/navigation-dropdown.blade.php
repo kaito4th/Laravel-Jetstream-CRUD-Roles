@@ -64,7 +64,7 @@
                                 Manage Employees
                                 <div class="dropdown-menu">
                                     <a href="{{ route('payroll.index') }}" style="display: block; padding: 0.3rem;"  :active="request()->routeIs('payroll.*')">Payroll</a><hr>
-                                    <a href="{{ route('users.index')}}" style="display: block; padding: 0.3rem;"  :active="request()->routeIs('users.*')">Update Profile</a>
+                                    <!-- <a href="{{ route('users.index')}}" style="display: block; padding: 0.3rem;"  :active="request()->routeIs('users.*')">Update Profile</a> -->
                                 </div>
                             </div>
                         </div>

@@ -68,7 +68,7 @@ class PayrollController extends Controller
         // $rates = new Payroll;
         // $dailyrate    = $rates->daily_rate    = $request->daily_rate;
         // $overtimerate = $rates->overtime_rate = $dailyrate / 8;
-        // $overtimepay  = $rates->overtime_pay  = $overtimerate * 1.25;
+        // $overtimepay  = $rates->overtime_pay  = $overtimerate * 1.'DRC-D002'5;
         // $sundayrate   = $rates->sunday_rate    = $overtimerate * 1.3;
         // $rates->save();
         // return redirect('/payroll/{id}', compact('rates'));
@@ -86,7 +86,7 @@ class PayrollController extends Controller
 
         //MAIN TABS
         $task             = Task::select('start','end')->first();
-        $user             = User::select('name', 'id')->where('id', $id)->first();
+        $user             = User::select('name', 'id','user_id')->where('user_id', $id)->first();
         $rates            = Payroll::select('daily_rate' , 'overtime_rate', 'overtime_pay', 'sunday_rate')->where('user_id', $id)->first();
         $attendances      = Attendance::select('attendance_count', 'regular_day', 'half_day', 'sunday')->where('user_id', $id)->first();
         $attendance_dates = Attendance_date::where('user_id', $id)->get();
@@ -169,7 +169,7 @@ class PayrollController extends Controller
 
         //MAIN TABS
         $task             = Task::select('start','end')->first();
-        $user             = User::select('name', 'id')->where('id', $id)->first();
+        $user             = User::select('name', 'user_id')->where('user_id', $id)->first();
         $rates            = Payroll::select('daily_rate' , 'overtime_rate', 'overtime_pay', 'sunday_rate')->where('user_id', $id)->first();
         $attendances      = Attendance::select('attendance_count', 'regular_day', 'half_day', 'sunday')->where('user_id', $id)->first();
         $attendance_dates = Attendance_date::where('user_id', $id)->get();
@@ -215,49 +215,52 @@ class PayrollController extends Controller
 
     public function allprint(){
         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $allusers = User::where('id', '>' , 2)->get();
-        $pays = Payroll::select('daily_rate')->where('user_id', '>' , 2)->first();
-        $atts = Attendance::where('user_id', '>' , 2)->get();
-        $other = Other_deduction::where('user_id', '>' , 2)->count();
+        $allusers = User::where('user_id', '>' , 'DRC-D002')->get();
+        $pays = Payroll::select('daily_rate')->where('user_id', '>' , 'DRC-D002')->first();
+        $atts = Attendance::where('user_id', '>' , 'DRC-D002')->get();
+        $other = Other_deduction::where('user_id', '>' , 'DRC-D002')->get();
+        
+
         $datas = DB::table('users')
-        ->join('payrolls', 'payrolls.user_id', '=' ,'users.id')
+        ->join('payrolls', 'payrolls.user_id', '=' ,'users.user_id')
         ->join('attendances', 'attendances.user_id', '=' ,'payrolls.user_id')
-        ->join('attendance_dates', 'attendance_dates.user_id', '=' ,'attendances.user_id')
-        ->join('remarks', 'remarks.user_id', '=' ,'attendance_dates.user_id')
+        //->join('attendance_dates', 'attendance_dates.user_id', '=' ,'attendances.user_id')
+        ->join('remarks', 'remarks.user_id', '=' ,'attendances.user_id')
         ->join('total_gross_pays', 'total_gross_pays.user_id', '=' ,'remarks.user_id')
         ->join('deductions', 'deductions.user_id', '=' ,'total_gross_pays.user_id')
         ->join('total_deductions', 'total_deductions.user_id', '=' ,'deductions.user_id')
         ->join('total_increases', 'total_increases.user_id', '=' ,'total_deductions.user_id')
         ->join('netpays', 'netpays.user_id', '=' ,'total_increases.user_id')
-        ->select('*')
+        //->select('*')
         ->get();
+        //dd($datas);
 
         //MAIN TABS
         $task             = Task::select('start','end')->first();
-        $users            = User::select('name', 'id')->where('id', '>' , 2)->get();
-        $rates            = Payroll::where('user_id', '>' , 2)->first();
-        $attendances      = Attendance::select('attendance_count', 'regular_day', 'half_day', 'sunday')->where('user_id', '>' , 2)->get();
-        $attendance_dates = Attendance_date::where('user_id', '>' , 2)->get();
-        $remarks          = Remark::select('late','overtime','sun_overtime')->where('user_id', '>' , 2)->get();
-        $total_grosses    = Total_gross_pay::select('total_gross', 'total_ot_pay','total_sot_pay', 'total_spl_pay','total_half_pay', 'basic_pay')->where('user_id', '>' , 2)->get();
-        $deductions       = Deduction::select('SSS_premium','SSS_loan','philhealth','pagibig','pagibig_loan','tax')->where('user_id', '>' , 2)->get();
-        $other_deduct     = Other_deduction::select('deduction_date','deduction_value','deduction_remarks','deduction_day')->where('user_id', '>' , 2)->get();
-        $total_deduct     = Total_deduction::select('total_deduction')->where('user_id', '>' , 2)->get();
-        $netpay           = Netpay::select('netpay')->where('user_id', '>' , 2)->get();
-        $increases        = Increase::select('inc_date','inc_day','increase','inc_remarks')->where('user_id', '>' , 2)->get();
-        $total_increases  = Total_increase::select('total_increase')->where('user_id', '>' , 2)->get();
+        $users            = User::select('name', 'id')->where('id', '>' , 'DRC-D00')->get();
+        $rates            = Payroll::where('user_id', '>' , 'DRC-D002')->first();
+        $attendances      = Attendance::select('attendance_count', 'regular_day', 'half_day', 'sunday')->where('user_id', '>' , 'DRC-D002')->get();
+        $attendance_dates = Attendance_date::where('user_id', '>' , 'DRC-D002')->get();
+        $remarks          = Remark::select('late','overtime','sun_overtime')->where('user_id', '>' , 'DRC-D002')->get();
+        $total_grosses    = Total_gross_pay::select('total_gross', 'total_ot_pay','total_sot_pay', 'total_spl_pay','total_half_pay', 'basic_pay')->where('user_id', '>' , 'DRC-D002')->get();
+        $deductions       = Deduction::select('SSS_premium','SSS_loan','philhealth','pagibig','pagibig_loan','tax')->where('user_id', '>' , 'DRC-D002')->get();
+        $other_deduct     = Other_deduction::select('deduction_date','deduction_value','deduction_remarks','deduction_day','user_id')->where('user_id', '>' , 'DRC-D002')->get();
+        $total_deduct     = Total_deduction::select('total_deduction')->where('user_id', '>' , 'DRC-D002')->get();
+        $netpay           = Netpay::select('netpay')->where('user_id', '>' , 'DRC-D002')->get();
+        $increases        = Increase::select('inc_date','inc_day','increase','inc_remarks')->where('user_id', '>' , 'DRC-D002')->get();
+        $total_increases  = Total_increase::select('total_increase')->where('user_id', '>' , 'DRC-D002')->get();
         $counter          = $remarks->count();
 
         //TO GET TOTAL O.T AND LATE
-        $total_ot   = DB::table('Remarks')->where('user_id', '>' , 2)->sum('overtime');
-        $total_sot  = DB::table('Remarks')->where('user_id', '>' , 2)->sum('sun_overtime');
-        $total_late = DB::table('Remarks')->where('user_id', '>' , 2)->sum('late');
+        $total_ot   = DB::table('Remarks')->where('user_id', '>' , 'DRC-D002')->sum('overtime');
+        $total_sot  = DB::table('Remarks')->where('user_id', '>' , 'DRC-D002')->sum('sun_overtime');
+        $total_late = DB::table('Remarks')->where('user_id', '>' , 'DRC-D002')->sum('late');
         //TO GET THE VALUE OF TOTAL LATE DEDUCTION
-        $total_late_count   = DB::table('remarks')->where('user_id', '>' , 2)->sum('late');
-        $deduct_rate        = Payroll::select('daily_rate')->where('user_id', '>' , 2)->first();
+        $total_late_count   = DB::table('remarks')->where('user_id', '>' , 'DRC-D002')->sum('late');
+        $deduct_rate        = Payroll::select('daily_rate')->where('user_id', '>' , 'DRC-D002')->first();
         $total_late_deduct  = $deduct_rate->daily_rate / 8 * $total_late_count;
 
-        // return view('print.multiple_payroll',compact('pays','atts','task','allusers','datas','other_deduct'));
+        return view('print.multiple_payroll',compact('pays','atts','task','allusers','datas','other_deduct','remarks'));
 
         // return view('print.multiple_payroll', compact('rates','users','task','attendances','attendance_dates',
         // 'remarks','counter','total_grosses','total_ot','total_late','total_late_deduct','total_sot','deductions','other_deduct','total_deduct',

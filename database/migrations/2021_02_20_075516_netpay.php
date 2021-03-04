@@ -15,7 +15,7 @@ class Netpay extends Migration
     {
         Schema::create('Netpays', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table->string('user_id');
             $table->decimal('netpay')->default(0)->nullable();
             $table->timestamps();
         });

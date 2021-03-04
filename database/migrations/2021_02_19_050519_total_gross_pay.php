@@ -15,7 +15,7 @@ class TotalGrossPay extends Migration
     {
         Schema::create('Total_gross_pays', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table->string('user_id');
             $table->decimal('total_gross', 8,2)->nullable();
             $table->decimal('basic_pay', 8,2)->nullable();
             $table->decimal('total_ot_pay', 8,2)->nullable();

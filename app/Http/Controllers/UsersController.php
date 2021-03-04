@@ -49,14 +49,14 @@ class UsersController extends Controller
     {
         $user = User::create($request->validated());
         $rate = Payroll::create([
-        'user_id'       => $user->id, 
+        'user_id'       => $user->user_id, 
         'daily_rate'    => $user->daily_rate,
         'overtime_rate' => $user->daily_rate / 8,
         'overtime_pay'  => $user->daily_rate / 8 * 1.25,
         'sunday_rate'   => $user->daily_rate / 8 * 1.3,
         ]);
         Attendance::create([
-            'user_id'           => $user->id,
+            'user_id'           => $user->user_id,
             'attendance_count'  => 0,
             'regular_day'       => 0,
             'half_day'          => 0,
@@ -64,14 +64,14 @@ class UsersController extends Controller
         ]);
 
         Remark::create([
-            'user_id'      => $user->id,
+            'user_id'      => $user->user_id,
             'late'         => 0,
             'overtime'     => 0,
             'sun_overtime' => 0,
         ]);
 
         Total_gross_pay::create([
-            'user_id'       => $user->id,
+            'user_id'       => $user->user_id,
             'total_gross'   => 0,
             'basic_pay'     => 0,
             'total_ot_pay'  => 0,
@@ -81,7 +81,7 @@ class UsersController extends Controller
         ]);
 
         Deduction::create([
-            'user_id'        => $user->id,
+            'user_id'        => $user->user_id,
             'SSS_premium'    => 0,
             'SSS_loan'       => 0,
             'philhealth'     => 0,
@@ -91,17 +91,17 @@ class UsersController extends Controller
         ]);
 
         Total_deduction::create([
-            'user_id'           => $user->id,
+            'user_id'           => $user->user_id,
             'total_deduction'   => 0,
         ]);
 
         Total_increase::create([
-            'user_id'       => $user->id,
+            'user_id'       => $user->user_id,
             'total_increase'=> 0,
         ]);
 
         Netpay::create([
-            'user_id'   => $user->id,
+            'user_id'   => $user->user_id,
             'netpay'    => 0,
         ]);
 
@@ -117,20 +117,31 @@ class UsersController extends Controller
         return view('users.show', compact('user'));
     }
 
-    public function edit(User $user)
+    public function edit($id)
     {
         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $roles = Role::pluck('title', 'id');
-
+        $user = User::where('user_id', $id)->first();
         $user->load('roles');
-
-        return view('users.edit', compact('user', 'roles'));
+        return view('users.edit', compact('user','roles'));
     }
 
-    public function update(UpdateUserRequest $request, User $user)
-    {
-        $user->update($request->validated());
+    public function update(Request $request,$id)
+    {   
+        $user = User::where('user_id', $id)->first();
+        User::where('user_id', $id)
+        ->update(['name'         => $request->input('name'),
+                  'address'      => $request->input('address'),
+                  'number'       => $request->input('number'),
+                  'email'        => $request->input('email'),
+                  'daily_rate'   => $request->input('daily_rate'),
+        ]);
+        Payroll::where('user_id',$id)
+        ->update(['daily_rate'  => $request->input('daily_rate'),
+        'overtime_rate' => $user->daily_rate / 8,
+        'overtime_pay'  => $user->daily_rate / 8 * 1.25,
+        'sunday_rate'   => $user->daily_rate / 8 * 1.3,]);
         
         $user->roles()->sync($request->input('roles', []));
 
@@ -140,7 +151,7 @@ class UsersController extends Controller
     public function destroy($id)
     {
         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $user             = User::where('id',$id)->delete();
+        $user             = User::where('user_id',$id)->delete();
         $attendance       = Attendance::where('user_id',$id)->delete();
         $attendance_date  = Attendance_date::where('user_id',$id)->delete();
         $deduction        = Deduction::where('user_id',$id)->delete();

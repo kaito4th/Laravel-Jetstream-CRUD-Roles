@@ -5,7 +5,7 @@ table {
   border-spacing: 0;
   width: 100%;
   border: 1px solid #ddd;
-  font-size: 12px;
+  font-size: 11px;
 }
 
 th, td {
@@ -28,7 +28,7 @@ hr{
                                 DRC DREAMS BUILDERS AND CONSTRUCTION, INC.
                             </div>
                             <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8 bg-gray-10 font-bold font-sans text-center" style="font-size: 13px; text-align: center; padding: 0.5rem 0rem 0.5rem 0rem;">
-                                Payroll for the Period of {{$task->start}} - {{$task->end}}
+                                Payroll for the Period of {{date('d-m-Y', strtotime($task->start))}} - {{date('d-m-Y', strtotime($task->end))}}
                             </div>
                                 <tbody class="bg-white divide-y divide-gray-200">
                                     <tr>
@@ -37,7 +37,7 @@ hr{
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-900">
-                                        {{ $alluser->id }}
+                                        {{ $user->user_id }}
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-900">
@@ -56,7 +56,7 @@ hr{
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-900">
-                                        {{ $alluser->name }}
+                                        {{ $user->name }}
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-900">
@@ -73,7 +73,7 @@ hr{
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-900">
-                                        {{ $rate->daily_rate }}
+                                        {{ $rates->daily_rate }}
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-xs text-green-900 font-bold">
@@ -179,7 +179,7 @@ hr{
                                         </td>
                                     </tr>
 
-                                    <tr>
+                                    <!-- <tr>
                                         <td class="px-6 py-4 whitespace-nowrap text-xs text-green-900 font-bold">
                                             {{ 'Total No. of Days Present' }}
                                         </td>
@@ -195,7 +195,7 @@ hr{
                                         <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-900">
                                             
                                         </td>
-                                    </tr>
+                                    </tr> -->
 
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap text-xs text-green-900 font-bold">
@@ -234,7 +234,7 @@ hr{
                                     </tr>
 
                                     <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap text-xs text-green-900 font-bold font-medium">
+                                        <td style="font-weight: bold;" class="px-6 py-4 whitespace-nowrap text-xs text-green-900 font-bold font-medium">
                                             {{ 'Total Gross Pay' }}
                                         </td>
 
@@ -428,7 +428,7 @@ hr{
                             </table>
                         </div>
                     </div> 
-                    <br><hr>                
+                    <hr style="margin: 9px 0 9px 0;">                
 <script type="text/javascript">
     window.onload = function() { window.print(); }
     window.onafterprint = function(){

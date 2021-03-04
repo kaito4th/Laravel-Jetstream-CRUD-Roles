@@ -15,7 +15,7 @@ class Deductions extends Migration
     {
         Schema::create('Deductions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table->string('user_id');
             $table->decimal('SSS_premium')->default(0)->nullable();
             $table->decimal('SSS_loan')->default(0)->nullable();
             $table->decimal('philhealth')->default(0)->nullable();

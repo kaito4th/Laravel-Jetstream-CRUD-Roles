@@ -21,7 +21,7 @@ hr{
     border: 1.5px dashed;
 }
 </style>
-@foreach($datas as $data)
+@foreach($datas as $data)  
 <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                         <div class="">
                             <table class="table-auto">
@@ -29,7 +29,7 @@ hr{
                                 DRC DREAMS BUILDERS AND CONSTRUCTION, INC.
                             </div>
                             <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8 bg-gray-10 font-bold font-sans text-center" style="font-size: 13px; text-align: center; padding: 0.5rem 0rem 0.5rem 0rem;">
-                                Payroll for the Period of {{$task->start}} - {{$task->end}}
+                                Payroll for the Period of {{date('d-m-Y', strtotime($task->start))}} - {{date('d-m-Y', strtotime($task->end))}}
                             </div>
                                 <tbody class="bg-white divide-y divide-gray-200">
                                     <tr>
@@ -38,7 +38,7 @@ hr{
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-900">
-                                        {{ $data->id }}
+                                        {{ $data->user_id }}
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-900">
@@ -74,7 +74,7 @@ hr{
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-900">
-                                        {{ $data->daily_rate }}
+                                        {{ $dr = $data->daily_rate }}
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-xs text-green-900 font-bold">
@@ -180,7 +180,7 @@ hr{
                                         </td>
                                     </tr>
 
-                                    <tr>
+                                    <!-- <tr>
                                         <td class="px-6 py-4 whitespace-nowrap text-xs text-green-900 font-bold">
                                             {{ 'Total No. of Days Present' }}
                                         </td>
@@ -196,7 +196,7 @@ hr{
                                         <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-900">
                                             
                                         </td>
-                                    </tr>
+                                    </tr> -->
 
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap text-xs text-green-900 font-bold">
@@ -208,7 +208,7 @@ hr{
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-xs text-green-900 font-bold">
-                                        {{ '$total_ot' }} hr(s)
+                                        {{ DB::table('Remarks')->where('user_id', $data->user_id)->sum('overtime') }} hr(s)
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-xs text-green-900 font-bold">
@@ -226,7 +226,7 @@ hr{
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-xs text-green-900 font-bold">
-                                        {{ '$total_sot' }} hr(s)
+                                        {{ DB::table('Remarks')->where('user_id', $data->user_id)->sum('sun_overtime') }} hr(s)
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-xs text-green-900 font-bold">
@@ -235,7 +235,7 @@ hr{
                                     </tr>
 
                                     <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap text-xs text-green-900 font-bold font-medium">
+                                        <td style="font-weight: bold;" class="px-6 py-4 whitespace-nowrap text-xs font-medium text-black font-bold uppercase tracking-wider">
                                             {{ 'Total Gross Pay' }}
                                         </td>
 
@@ -364,14 +364,14 @@ hr{
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-900">
-                                            {{ '$total_late' }} hr(s)
+                                            {{ $tlc = DB::table('Remarks')->where('user_id', $data->user_id)->sum('late') }} hr(s)
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-900">
-                                            {{ '$total_late_deduct' }}
+                                            {{ number_format($dr / 8 * $tlc,'2','.','') }}
                                         </td>
                                     </tr>
-                            @foreach ($other_deduct as $others)
+                            @foreach ($other_deduct->where('user_id',$data->user_id) as $others)
                                 <tr>
                                         <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-900">
                                             {{ $others->deduction_remarks }}&nbsp&nbsp ({{ $others->deduction_date }} - {{ $others->deduction_day }})

@@ -15,7 +15,7 @@ class TotalDeductions extends Migration
     {
         Schema::create('Total_deductions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table->string('user_id');
             $table->decimal('total_deduction', 8,2)->default(0)->nullable();
             $table->timestamps();
         });

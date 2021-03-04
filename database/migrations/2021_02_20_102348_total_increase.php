@@ -15,7 +15,7 @@ class TotalIncrease extends Migration
     {
         Schema::create('Total_increases', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table->string('user_id');
             $table->decimal('total_increase', 8,2)->Default(0)->nullable();
             $table->timestamps();
         });

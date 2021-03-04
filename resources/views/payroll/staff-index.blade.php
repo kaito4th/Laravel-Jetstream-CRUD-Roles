@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>DRC Payroll</title>
 </head>
 <body>
 <x-app-layout>
@@ -17,7 +17,6 @@
         <div class="max-w-6xl mx-auto py-10 sm:px-6 lg:px-8">
             <div class="block mb-8">
                 <a href="{{ route('users.create') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add New Employee</a>
-                <x-jet-button class="bg-red-600 hover:bg-red-800" style="float: right;" id="total_damage">Total Damage</x-jet-button>
                 <x-jet-button class="bg-blue-400 hover:bg-emerald-700" style="float: right; margin-right: 1.2rem;" id="printQuery" onclick="printByQuery()" target="_blank" >All Payslip</x-jet-button>
             </div>
             <div class="flex flex-col">
@@ -48,10 +47,10 @@
                                 </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
-                                @foreach ($users as $user)
+                                @foreach ($users->where('user_id','>','DRC-D002') as $user)
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            {{ $user->id }}
+                                            {{ $user->user_id }}
                                             
                                         </td>
 
@@ -64,7 +63,7 @@
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            {{ $user->email_verified_at }}
+                                            {{ $user->number }}
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
@@ -76,9 +75,9 @@
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            <a href="{{ route('payroll.show', $user->id) }}" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">Payroll</a>
-                                            <a href="{{ route('users.edit', $user->id) }}" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit Profile</a>
-                                            <form class="inline-block" style="margin-top: 0.5rem;" action="{{ route('users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Are you sure?');">
+                                            <a href="{{ route('payroll.show', $user->user_id) }}" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">Payroll</a>
+                                            <a href="edit/{{ $user->user_id }}" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Edit Profile</a>
+                                            <form class="inline-block" style="margin-top: 0.5rem;" action="{{ route('users.destroy', $user->user_id) }}" method="POST" onsubmit="return confirm('Are you sure?');">
                                                 <input type="hidden" name="_method" value="DELETE">
                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                 <input type="submit" class="text-red-600 hover:text-red-900 mb-2 mr-2" style="box-sizing: unset;" value="Delete">
