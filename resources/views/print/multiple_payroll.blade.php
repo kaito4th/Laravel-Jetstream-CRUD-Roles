@@ -368,7 +368,7 @@ hr{
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-900">
-                                            {{ number_format($dr / 8 * $tlc,'2','.','') }}
+                                            {{ $late_deduct = number_format($dr / 8 * $tlc,'2','.','') }}
                                         </td>
                                     </tr>
                             @foreach ($other_deduct->where('user_id',$data->user_id) as $others)
@@ -404,7 +404,7 @@ hr{
                                         </td>
 
                                         <td style="color: #c21502;" class="px-6 py-4 whitespace-nowrap text-s text-black-900 font-bold rounded-full bg-red-300">
-                                            {{ $data->total_deduction }}
+                                            {{ number_format($data->total_deduction + $late_deduct,'2','.','') }}
                                         </td>
                                     </tr>
 

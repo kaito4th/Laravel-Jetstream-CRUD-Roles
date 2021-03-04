@@ -293,9 +293,6 @@ body{
                                     <th scope="col" class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Time Out
                                     </th>
-                                    <th scope="col" class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Remarks
-                                    </th>
                                     <th scope="col" width="200" class="px-6 py-3 bg-gray-50">
 
                                     </th>
@@ -320,31 +317,12 @@ body{
                                             {{ $attendance_date->time_out }}
                                         </td>
 
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                           @foreach ($remarks as $remark)
-                                                @if ($remark->late != null)
-                                                <span class="px-2 inline-block text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                    {{ $remark->late}} mns late
-                                                </span>
-                                                    
-                                                
-
-                                                @elseif ($remark->late == null)
-                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                    {{ ' ' }} 
-                                                </span>
-                                                
-
-                                                @endif
-                                            @endforeach
-                                        </td>
-
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            <form class="inline-block" action="{{ route('attendance.destroy', ['id'=>$user->user_id, 'iid'=>$attendance_date->id] )}}" method="GET" onsubmit="return confirm('Are you sure?');">
+                                            <!-- <form class="inline-block" action="{{ route('attendance.destroy', ['id'=>$user->user_id, 'iid'=>$attendance_date->id] )}}" method="GET" onsubmit="return confirm('Are you sure?');">
                                                 <input type="hidden" name="_method" value="DELETE">
                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                 <input type="submit" class="text-red-600 hover:text-red-900 mb-2 mr-2" style="box-sizing: unset;" value="Delete">
-                                            </form>
+                                            </form> -->
                                         </td>
                                     </tr>
                                 @endforeach
@@ -1005,7 +983,7 @@ body{
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            {{ $total_late_deduct }}
+                                            {{ number_format($total_late_deduct,'2','.','') }}
                                         </td>
                                     </tr>
                             @foreach ($other_deduct as $others)
@@ -1041,7 +1019,7 @@ body{
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-black-900 font-bold text-xl rounded-full bg-red-300">
-                                            {{ $total_deduct->total_deduction }}
+                                            {{ number_format($total_deduct->total_deduction + $total_late_deduct,'2','.','') }}
                                         </td>
                                     </tr>
 

@@ -403,7 +403,7 @@ hr{
                                         </td>
 
                                         <td style="color: #c21502;" class="px-6 py-4 whitespace-nowrap text-s text-black-900 font-bold rounded-full bg-red-300">
-                                            {{ $total_deduct->total_deduction }}
+                                            {{ number_format($total_deduct->total_deduction + $total_late_deduct,'2','.','') }}
                                         </td>
                                     </tr>
 
