@@ -74,6 +74,13 @@ class OtherDeductionController extends Controller
             [
                 'SSS_loan'   => $deduct_value,
             ]);
+        }else if($select == 'phils'){
+            Deduction::updateOrCreate([
+                'user_id'       => $id,
+            ],
+            [
+                'philhealth'   => $deduct_value,
+            ]);
         }else if($select == 'pagibig'){
             Deduction::updateOrCreate([
                 'user_id'       => $id,

@@ -61,13 +61,24 @@ class AttendanceController extends Controller
         $newdate = Carbon::createFromFormat('Y-m-d', $date)
                     ->format('m/d/Y');
         //THIS IS FOR ATTENDANCE DATES TIME IN AND TIME OUT
-        $dates = Attendance_date::create([
-            'user_id'   => $id,
-            'date'      => $newdate,
-            'day'       => $dayname,
-            'time_in'   => $time_in  = $request->input('time_in'),
-            'time_out'  => $time_out = $request->input('time_out'),
-        ]);
+        $daynamewithholiday = $dayname. ' '.'(Holiday)';
+        if($select == 'holiday'){
+            $dates = Attendance_date::create([
+                'user_id'   => $id,
+                'date'      => $newdate,
+                'day'       => $daynamewithholiday,
+                'time_in'   => $time_in  = $request->input('time_in'),
+                'time_out'  => $time_out = $request->input('time_out'),
+            ]);
+        }else{
+            $dates = Attendance_date::create([
+                'user_id'   => $id,
+                'date'      => $newdate,
+                'day'       => $dayname,
+                'time_in'   => $time_in  = $request->input('time_in'),
+                'time_out'  => $time_out = $request->input('time_out'),
+            ]);
+        }
         
         //THIS IS FOR REMARKS(LATE,OVERTIME, ETC.)
         $remarks = Remark::select('overtime','sun_overtime')->where('user_id', $id)->first();
@@ -139,7 +150,7 @@ class AttendanceController extends Controller
 
         //THIS IS FOR ATTENDANCE COUNT (REGULAR DAY,HALF DAY,SUNDAY/SPECIAL)
         //dd($dayname);
-        if($dayname == 'Sunday'){
+        if($dayname == 'Sunday' && $late <= 15){
             $attendance = Attendance::updateOrCreate([
                 'user_id'   => $id,
             
@@ -148,7 +159,7 @@ class AttendanceController extends Controller
                 DB::table('attendances')->where('user_id', $id)->increment('sunday', + 1),
                 DB::table('attendances')->where('user_id', $id)->increment('attendance_count', + 1),
                 ]);
-        }else if($select == 'holiday'){
+        }else if($select == 'holiday' && $late <= 15){
             $attendance = Attendance::updateOrCreate([
                 'user_id'   => $id,
             
@@ -159,6 +170,20 @@ class AttendanceController extends Controller
                 ]);
         }
         else if($late >= 60){
+            Attendance::updateOrCreate([
+                'user_id'   => $id,
+            ],[
+                DB::table('attendances')->where('user_id', $id)->increment('half_day', + 1),
+                DB::table('attendances')->where('user_id', $id)->increment('attendance_count', + 1),
+            ]);
+        }else if($late >= 60 && $dayname == 'Sunday'){
+            Attendance::updateOrCreate([
+                'user_id'   => $id,
+            ],[
+                DB::table('attendances')->where('user_id', $id)->increment('half_day', + 1),
+                DB::table('attendances')->where('user_id', $id)->increment('attendance_count', + 1),
+            ]);
+        }else if($late >= 60 && $select == 'holiday'){
             Attendance::updateOrCreate([
                 'user_id'   => $id,
             ],[

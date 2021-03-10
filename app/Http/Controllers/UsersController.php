@@ -139,9 +139,9 @@ class UsersController extends Controller
         ]);
         Payroll::where('user_id',$id)
         ->update(['daily_rate'  => $request->input('daily_rate'),
-        'overtime_rate' => $user->daily_rate / 8,
-        'overtime_pay'  => $user->daily_rate / 8 * 1.25,
-        'sunday_rate'   => $user->daily_rate / 8 * 1.3,]);
+        'overtime_rate' => $request->input('daily_rate') / 8,
+        'overtime_pay'  => $request->input('daily_rate') / 8 * 1.25,
+        'sunday_rate'   => $request->input('daily_rate') / 8 * 1.3,]);
         
         $user->roles()->sync($request->input('roles', []));
 

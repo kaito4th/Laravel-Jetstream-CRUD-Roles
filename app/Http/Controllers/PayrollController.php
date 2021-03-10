@@ -262,26 +262,19 @@ class PayrollController extends Controller
 
         return view('print.multiple_payroll',compact('pays','atts','task','allusers','datas','other_deduct','remarks'));
 
-        // return view('print.multiple_payroll', compact('rates','users','task','attendances','attendance_dates',
-        // 'remarks','counter','total_grosses','total_ot','total_late','total_late_deduct','total_sot','deductions','other_deduct','total_deduct',
-        // 'netpay','increases','total_increases','allusers','datas'));
-        // //MAIN VIEW
-        // if($attendance_dates == null){
-        //     return view('print.single_payroll', compact('rates','users','task','attendances','attendance_dates',
-        //     'remarks','counter','total_grosses','total_ot','total_late','total_late_deduct','total_sot','deductions','other_deduct','total_deduct',
-        //     'netpay','increases','total_increases','allusers'));
-        // } else if($total_grosses->basic_pay == null){
-        //     return view('print.single_payroll', compact('rates','users','task','attendances','attendance_dates',
-        //     'remarks','counter','total_grosses','total_ot','total_late','total_late_deduct','total_sot','deductions','other_deduct','total_deduct',
-        //     'netpay','increases','total_increases','allusers'));
-        // }else if($total_deduct->total_deduction == null){ 
-        //     return view('print.single_payroll', compact('rates','users','task','attendances','attendance_dates',
-        //     'remarks','counter','total_grosses','total_ot','total_late','total_late_deduct','total_sot','deductions','other_deduct','total_deduct',
-        //     'netpay','increases','total_increases','allusers'));
-        // }else{
-        //     return view('print.single_payroll', compact('rates','users','task','attendances','attendance_dates',
-        //     'remarks','counter','total_grosses','total_ot','total_late','total_late_deduct','total_sot','deductions','other_deduct','total_deduct',
-        //     'netpay','increases','total_increases','allusers'));
-        // }
+    }
+
+    public function allsummary(){
+        $allusers = User::where('user_id', '>', 'DRC-D002')->get();
+        $attendances      = Attendance::select('attendance_count', 'regular_day', 'half_day', 'sunday')->where('user_id', '>' , 'DRC-D002')->get();
+        $attendance_dates = Attendance_date::where('user_id', '>' , 'DRC-D002')->get();
+        $deductions       = Deduction::select('SSS_premium','SSS_loan','philhealth','pagibig','pagibig_loan','tax')->where('user_id', '>' , 'DRC-D002')->get();
+        $other_deduct     = Other_deduction::select('deduction_date','deduction_value','deduction_remarks','deduction_day','user_id')->where('user_id', '>' , 'DRC-D002')->get();
+        $total_deduct     = Total_deduction::select('total_deduction')->where('user_id', '>' , 'DRC-D002')->get();
+        $increases        = Increase::select('inc_date','inc_day','increase','inc_remarks')->where('user_id', '>' , 'DRC-D002')->get();
+        $task             = Task::select('start','end')->first();
+
+        return view('print.summary', compact('allusers','attendances','attendance_dates','deductions',
+                    'other_deduct','total_deduct','increases','task'));
     }
 }

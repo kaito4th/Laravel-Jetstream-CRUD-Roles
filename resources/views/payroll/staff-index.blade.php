@@ -18,6 +18,7 @@
             <div class="block mb-8">
                 <a href="{{ route('users.create') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add New Employee</a>
                 <x-jet-button class="bg-blue-400 hover:bg-emerald-700" style="float: right; margin-right: 1.2rem;" id="printQuery" onclick="printByQuery()" target="_blank" >All Payslip</x-jet-button>
+                <x-jet-button class="bg-blue-400 hover:bg-emerald-700" style="float: right; margin-right: 1.2rem;" id="printQuery1" onclick="printByQuery1()" target="_blank" >Print Summary</x-jet-button>
             </div>
             <div class="flex flex-col">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -107,6 +108,19 @@ function printByQuery(){
     
     }
 
+</script>
+
+<script>
+function printByQuery1(){
+    window.location.href = "/allsummary";
+        var url = window.location.href;
+        var newUrl = url.substring(url.indexOf("?"));
+    // console.log(newUrl == url);
+        if(newUrl != url){
+    window.open("/print/summary"+newUrl);
+        }
+    
+    }
 </script>
 
     

@@ -1,5 +1,5 @@
 <!-- <link rel="stylesheet" href="{{ url('/payroll-tabs.css') }}"> -->
-<style>
+<!-- <style>
 /* *{
     box-sizing: border-box;
 }
@@ -46,23 +46,23 @@ body{
 }
 
 .tab-trigger ul li:nth-child(1) label{
-    background: #56ff75;
+    background: #979894;
 }
 
 .tab-trigger ul li:nth-child(2) label{
-    background: #56ff75;
+    background: #979894;
 }
 
 .tab-trigger ul li:nth-child(3) label{
-    background: #56ff75;
+    background: #979894;
 }
 
 .tab-trigger ul li:nth-child(4) label{
-    background: #56ff75;
+    background: #979894;
 }
 
 .tab-trigger ul li:nth-child(5) label{
-    background: #56ff75;
+    background: #979894;
 }
 
 .tab-container-wrap{
@@ -105,7 +105,7 @@ body{
 }
 
 
-</style>
+</style> -->
 <x-app-layout>
     <x-slot name="header">
     <h2 class="ml-20 text-lg leading-7 font-semibold inline-block" style="color:green; font-size: 20px;">{{$user->name}}</h2>'s 
@@ -181,7 +181,7 @@ body{
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            {{ $rates->overtime_pay }} / hour
+                                            {{ $rates->overtime_rate }} / hour
                                         </td>
                                     </tr>
 
@@ -316,7 +316,6 @@ body{
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                             {{ $attendance_date->time_out }}
                                         </td>
-
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                             <!-- <form class="inline-block" action="{{ route('attendance.destroy', ['id'=>$user->user_id, 'iid'=>$attendance_date->id] )}}" method="GET" onsubmit="return confirm('Are you sure?');">
                                                 <input type="hidden" name="_method" value="DELETE">
@@ -350,6 +349,7 @@ body{
                             <option id="default" name="default" value="default">--select--</option>
                             <option id="sss_premium" name="sss_premium" value="sss_premium">SSS Premium</option>
                             <option id="sss_loan" name="sss_loan" value="sss_loan">SSS Loan</option>
+                            <option id="phils" name="phils" value="phils">Philhealth</option>
                             <option id="pagibig" name="pagibig" value="pagibig">PAG-IBIG</option>
                             <option id="pagibig_loan" name="pagibig_loan" value="pagibig_loan">PAG-IBIG Loan</option>
                         </select>

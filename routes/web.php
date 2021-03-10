@@ -54,6 +54,7 @@ Route::group(['middleware' => 'auth'], function () {
     //Route for Print
     Route::get('/payslip/{user_id}', [PayrollController::class, 'print']);
     Route::get('/allpayslip', [PayrollController::class, 'allprint']);
+    Route::get('/allsummary', [PayrollController::class, 'allsummary']);
 
 
 });
