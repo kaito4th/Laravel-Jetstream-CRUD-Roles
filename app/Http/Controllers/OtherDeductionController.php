@@ -14,6 +14,7 @@ use App\Models\Remark;
 use App\Models\Netpay;
 use App\Models\Attendance_date;
 use App\Models\Total_gross_pay;
+use App\Models\Total_increase;
 use App\Models\Total_deduction;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -114,30 +115,35 @@ class OtherDeductionController extends Controller
         }
         
         //THIS IS FOR TOTAL DEDUCTIONS
+        $deduct_rate            = Payroll::select('daily_rate')->where('user_id',$id)->first();
+        $total_late_count       = DB::table('remarks')->where('user_id', $id)->sum('late');
+        $total_late_deduct      = $deduct_rate->daily_rate / 8 * $total_late_count;
         $total_other_deductions = DB::table('Other_deductions')->where('user_id', $id)->sum('deduction_value');
         $deduction              = Deduction::select('SSS_premium','SSS_loan','philhealth','pagibig','pagibig_loan','tax')->where('user_id', $id)->first();
 
-            Total_deduction::updateOrCreate([
-                'user_id'         => $id,
-            ],[
-                'total_deduction' => $total_other_deductions + $deduction->SSS_premium + $deduction->SSS_loan
-                                    + $deduction->philhealth + $deduction->pagibig + $deduction->pagibig_loan + $deduction->tax,
-            ]);
+        Total_deduction::updateOrCreate([
+            'user_id'         => $id,
+        ],[
+            'total_deduction' => $total_other_deductions + $deduction->SSS_premium + $deduction->SSS_loan
+                                + $deduction->philhealth + $deduction->pagibig + $deduction->pagibig_loan + $deduction->tax + $total_late_deduct,
+        ]);
 
-            //THIS IS FOR NETPAY//
-            $total_gross        = Total_gross_pay::select('total_gross')->where('user_id', $id)->first();
-            $total_deduction    = Total_deduction::select('total_deduction')->where('user_id', $id)->first();
-            $total_late_count   = DB::table('remarks')->where('user_id', $id)->sum('late');
-            $deduct_rate        = Payroll::select('daily_rate')->where('user_id',$id)->first();
-            $total_late_deduct  = $deduct_rate->daily_rate / 8 * $total_late_count;
+    //THIS IS FOR NETPAY//
+        $total_gross        = Total_gross_pay::select('total_gross')->where('user_id', $id)->first();
+        $total_deduction    = Total_deduction::select('total_deduction')->where('user_id', $id)->first();
+        $netpay             = Netpay::select('netpay')->where('user_id',$id)->first();
+        $total_increase     = Total_increase::select('total_increase')->where('user_id',$id)->first();
+        
 
-            $total_deds = $total_late_deduct + $total_deduction->total_deduction;
-            
-            Netpay::updateOrCreate([
-                'user_id'    => $id,
-            ],[
-                'netpay'     => $total_gross->total_gross - $total_deds,
-            ]);
+        $total_deds = $total_deduction->total_deduction;
+        $total_incs = $total_increase->total_increase;
+        
+        //dd($total_deds,$total_incs,$total_gross->total_gross);
+        Netpay::updateOrCreate([
+            'user_id'    => $id,
+        ],[
+            'netpay'     => $total_gross->total_gross - $total_deds,
+        ]);
 
         return back();
     }

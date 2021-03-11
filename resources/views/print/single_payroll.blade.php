@@ -407,7 +407,7 @@ hr{
                                         </td>
 
                                         <td style="color: #c21502; font-size:13px; font-weight:bold" class="px-6 py-4 whitespace-nowrap text-s text-black-900 font-bold rounded-full bg-red-300">
-                                            {{ number_format($total_deduct->total_deduction + $total_late_deduct,'2','.','') }}
+                                            {{ $total_deduct->total_deduction }}
                                         </td>
                                     </tr>
 
@@ -432,7 +432,7 @@ hr{
                             </table>
                         </div>
                     </div> 
-                    <hr style="margin: 9px 0 9px 0;">                
+                    <!-- <hr style="margin: 9px 0 9px 0;">                 -->
 <script type="text/javascript">
     window.onload = function() { window.print(); }
     window.onafterprint = function(){

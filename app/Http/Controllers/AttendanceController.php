@@ -89,7 +89,6 @@ class AttendanceController extends Controller
            ],
            [
             DB::table('remarks')->where('user_id', $id)->increment('late', + 1),
-            'overtime'  =>$remarks->overtime +  $request->input('overtime'),
            ]);
         }
         if($dayname == 'Sunday' || $select == 'holiday'){
@@ -107,47 +106,15 @@ class AttendanceController extends Controller
                 'overtime'  => $remarks->overtime +  $request->input('overtime'),
             ]);
         }
-        // if($dayname == 'Sunday'){
-        //     Remark::updateOrCreate([
-        //         'user_id'   => $id,
-        //        ],
-        //        [
-        //         'sun_overtime'  =>$remarks->sun_overtime +  $request->input('overtime'),
-        //        ]);
-        // }else if($dayname == 'Sunday' && $late > 15 && $late < 60){
-        //     Remark::updateOrCreate([
-        //         'user_id'   => $id,
-        //        ],
-        //        [
-        //         DB::table('remarks')->where('user_id', $id)->increment('late', + 1),
-        //         'sun_overtime'  =>$remarks->sun_overtime +  $request->input('overtime'),
-        //        ]);
-        // }
-        // else if($dayname != 'Sunday'){
-        //     Remark::updateOrCreate([
-        //         'user_id'   => $id,
-        //        ],
-        //        [
-        //         'overtime'  =>$remarks->overtime +  $request->input('overtime'),
-        //        ]);
-        // }
-        // if($select == 'holiday'){
-        //     Remark::updateOrCreate([
-        //         'user_id'   => $id,
-        //        ],
-        //        [
-        //         'sun_overtime'  =>$remarks->sun_overtime +  $request->input('overtime'),
-        //        ]);
-        // }else if($select != 'holiday'){
-        //     Remark::updateOrCreate([
-        //         'user_id'   => $id,
-        //        ],
-        //        [
-        //         'overtime'  =>$remarks->overtime +  $request->input('overtime'),
-        //        ]);
-        //  }
+        if($dayname == 'Sunday' || $select == 'holiday' && $late > 15 && $late <= 60){
+            Remark::updateOrCreate([
+                'user_id'   => $id,
+            ],
+            [
+                'sun_overtime'  => $remarks->sun_overtime +  $request->input('overtime'),
+            ]);
+        }
          
-
         //THIS IS FOR ATTENDANCE COUNT (REGULAR DAY,HALF DAY,SUNDAY/SPECIAL)
         //dd($dayname);
         if($dayname == 'Sunday' && $late <= 15){
@@ -160,6 +127,26 @@ class AttendanceController extends Controller
                 DB::table('attendances')->where('user_id', $id)->increment('attendance_count', + 1),
                 ]);
         }else if($select == 'holiday' && $late <= 15){
+            $attendance = Attendance::updateOrCreate([
+                'user_id'   => $id,
+            
+            ],
+            [
+                DB::table('attendances')->where('user_id', $id)->increment('sunday', + 1),
+                DB::table('attendances')->where('user_id', $id)->increment('attendance_count', + 1),
+                ]);
+        }
+        else if($select == 'holiday' && $late >= 16 && $late <= 60){
+            $attendance = Attendance::updateOrCreate([
+                'user_id'   => $id,
+            
+            ],
+            [
+                DB::table('attendances')->where('user_id', $id)->increment('sunday', + 1),
+                DB::table('attendances')->where('user_id', $id)->increment('attendance_count', + 1),
+                ]);
+        }
+        else if($dayname == 'Sunday' && $late >= 16 && $late <= 60){
             $attendance = Attendance::updateOrCreate([
                 'user_id'   => $id,
             

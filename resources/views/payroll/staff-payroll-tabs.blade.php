@@ -1019,7 +1019,7 @@ body{
                                         </td>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-black-900 font-bold text-xl rounded-full bg-red-300">
-                                            {{ number_format($total_deduct->total_deduction + $total_late_deduct,'2','.','') }}
+                                            {{ $total_deduct->total_deduction }}
                                         </td>
                                     </tr>
 

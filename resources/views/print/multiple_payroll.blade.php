@@ -408,7 +408,7 @@ hr{
                                         </td>
 
                                         <td style="color: #c21502; font-size:13px; font-weight:bold" class="px-6 py-4 whitespace-nowrap text-s text-black-900 font-bold rounded-full bg-red-300">
-                                            {{ number_format($data->total_deduction + $late_deduct,'2','.','') }}
+                                            {{ $data->total_deduction }}
                                         </td>
                                     </tr>
 
@@ -433,7 +433,6 @@ hr{
                             </table>
                         </div>
                     </div> 
-                    <br><hr>
 @endforeach
 <script type="text/javascript">
     window.onload = function() { window.print(); }
